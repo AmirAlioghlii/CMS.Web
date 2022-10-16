@@ -1,6 +1,6 @@
 namespace Domain.Entities.media;
 
-public class MediaCategory
+public class MediaCategory: BaseAuditableEntity
 {
     public string Title { get; set; }
 
