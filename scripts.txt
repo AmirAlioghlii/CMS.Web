@@ -1,0 +1,11 @@
+add new migration:
+dotnet ef migrations add "migration name" -c ApplicationDbContext -o .\Persistence\Migrations --project .\src\Infrastructure\CMS.Infrastructure.csproj --startup-project .\src\Api\CMS.Api.csproj
+
+update dataBase:
+dotnet ef database update init -c ApplicationDbContext --project .\src\Infrastructure\CMS.Infrastructure.csproj --startup-project .\src\Api\CMS.Api.csproj
+
+remove migration:
+dotnet ef migrations remove -c ApplicationDbContext -o "" --project .\src\Infrastructure\CMS.Infrastructure.csproj --startup-project .\src\Api\CMS.Api.csproj
+
+run docker container:
+docker run -e "ACCEPT_EULA=Y" -e "MSSQL_SA_PASSWORD=" -p 1433:1433 -d mcr.microsoft.com/mssql/server:2022-latest

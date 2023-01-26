@@ -5,16 +5,12 @@ public class Media : BaseAuditableEntity
     public Media(string url, 
         string title, 
         string? alt, 
-        string? description, 
-        long mediaCategoryId, 
-        MediaCategory mediaCategory)
+        string? description)
     {
         Url = url;
         Title = title;
         Alt = alt;
         Description = description;
-        MediaCategoryId = mediaCategoryId;
-        MediaCategory = mediaCategory;
     }
 
     public string Url { get; set; }
