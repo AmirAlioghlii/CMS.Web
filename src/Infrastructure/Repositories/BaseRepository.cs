@@ -1,6 +1,7 @@
 ﻿using Application.Common.Interfaces.Repositories;
 using Domain.Common;
 using Infrastructure.Persistence;
+using Infrastructure.Repositories;
 using System.Linq.Expressions;
 
 namespace CMS.Infrastructure.Repositories
@@ -14,32 +15,32 @@ namespace CMS.Infrastructure.Repositories
             _context = context;
         }
 
-        public Task<bool> Add(T entity)
+        public void Add(T entity)
+        {
+            _context.Add(entity);
+        }
+
+        public void Delete(Guid id)
         {
             throw new NotImplementedException();
         }
 
-        public Task<bool> Delete(Guid id)
+        public IEnumerable<T> Find(Expression<Func<T, bool>> predicate)
         {
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<T>> Find(Expression<Func<T, bool>> predicate)
+        public IEnumerable<T> GetAll()
         {
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<T>> GetAll()
+        public T GetById(Guid id)
         {
             throw new NotImplementedException();
         }
 
-        public Task<T> GetById(Guid id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<bool> Update(T entity)
+        public void Update(T entity)
         {
             throw new NotImplementedException();
         }
