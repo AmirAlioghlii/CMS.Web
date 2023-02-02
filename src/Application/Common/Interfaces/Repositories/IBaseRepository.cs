@@ -7,11 +7,11 @@ public interface IBaseRepository<T> where T : BaseAuditableEntity
 {
     IEnumerable<T> GetAll();
 
-    T GetById(Guid id);
+    Task<T> GetByIdAsync(long id);
 
     void Add(T entity);
 
-    void Delete(Guid id);
+    void Delete(T entity);
 
     void Update(T entity);
 

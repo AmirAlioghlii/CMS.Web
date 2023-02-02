@@ -2,6 +2,7 @@
 using Domain.Common;
 using Infrastructure.Persistence;
 using Infrastructure.Repositories;
+using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
 namespace CMS.Infrastructure.Repositories
@@ -9,20 +10,22 @@ namespace CMS.Infrastructure.Repositories
     public class BaseRepository<T> : IBaseRepository<T> where T : BaseAuditableEntity
     {
         private readonly ApplicationDbContext _context;
+        private DbSet<T> entities;
 
         public BaseRepository(ApplicationDbContext context)
         {
             _context = context;
+            entities = context.Set<T>();
         }
 
         public void Add(T entity)
         {
-            _context.Add(entity);
+            entities.Add(entity);
         }
 
-        public void Delete(Guid id)
+        public void Delete(T entity)
         {
-            throw new NotImplementedException();
+            entities.Remove(entity);
         }
 
         public IEnumerable<T> Find(Expression<Func<T, bool>> predicate)
@@ -35,9 +38,9 @@ namespace CMS.Infrastructure.Repositories
             throw new NotImplementedException();
         }
 
-        public T GetById(Guid id)
+        public async Task<T> GetByIdAsync(long id)
         {
-            throw new NotImplementedException();
+            return await entities.FirstOrDefaultAsync(a => a.Id == id);
         }
 
         public void Update(T entity)
