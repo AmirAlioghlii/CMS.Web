@@ -1,4 +1,5 @@
 ﻿using CMS.Application.Commands.Medias;
+using CMS.Application.Queries.Medias;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -19,9 +20,9 @@ namespace CMS.Api.Controllers
         [HttpPost]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
-        public async Task<IActionResult> Add(IFormFile file)
+        public async Task<IActionResult> Add(AddMediaCommand command)
         {
-            return await _mediator.Send(new AddMediaCommand(file))
+            return await _mediator.Send(command)
                 ? Ok()
                 : StatusCode(StatusCodes.Status500InternalServerError);
         }
@@ -29,21 +30,17 @@ namespace CMS.Api.Controllers
         [HttpDelete("{id}")]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
-        public async Task<IActionResult> Delete(long id)
+        public async Task<IActionResult> Delete(DeleteMediaCommand command)
         {
-            return await _mediator.Send(new DeleteMediaCommand(id))
+            return await _mediator.Send(command)
                 ? Ok()
                 : StatusCode(StatusCodes.Status500InternalServerError);
         }
 
         [HttpGet("{id}")]
-        [ProducesResponseType((int)HttpStatusCode.OK)]
-        [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
-        public async Task<IActionResult> Add(IFormFile file)
+        public async Task<IActionResult> Get(GetMediaQuery query)
         {
-            return await _mediator.Send(new AddMediaCommand(file))
-                ? Ok()
-                : StatusCode(StatusCodes.Status500InternalServerError);
+            return File(await _mediator.Send(query), "application/octet-stream");
         }
     }
 }
